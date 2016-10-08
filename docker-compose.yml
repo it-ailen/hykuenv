@@ -42,8 +42,9 @@ services:
       - ./ChaiJin:/workspace:ro
       - ./config/ChaiJin:/config:ro
   hyku.gateway:
-    build: ./docker/nginx
-    image: hyku.gateway
+#    build: ./docker/nginx
+#    image: hyku.gateway
+    image: nginx
     links:
       - chaijin.external.app
       - chaijin.external.console
@@ -51,5 +52,7 @@ services:
       - chaijin.internal.content
     volumes:
       - ./assets/:/assets:ro
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
     ports:
       - 80:80
