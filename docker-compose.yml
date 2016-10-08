@@ -17,12 +17,16 @@ services:
     volumes:
       - ./ChaiJin:/workspace:ro
       - ./config/ChaiJin:/config:ro
+    extra_hosts:
+      - service.self.internal.hyku.com:127.17.0.1
   chaijin.external.console:
     build: ./docker/chaijin.external.console
     image: chaijin.external.console
     volumes:
       - ./ChaiJin:/workspace:ro
       - ./config/ChaiJin:/config:ro
+    extra_hosts:
+      - service.self.internal.hyku.com:127.17.0.1
   chaijin.internal.admin:
     build: ./docker/chaijin.internal.admin
     image: chaijin.internal.admin
@@ -32,6 +36,8 @@ services:
     volumes:
       - ./ChaiJin:/workspace:ro
       - ./config/ChaiJin:/config:ro
+    extra_hosts:
+      - service.self.internal.hyku.com:127.17.0.1
   chaijin.internal.content:
     build: ./docker/chaijin.internal.content
     image: chaijin.internal.content
@@ -41,6 +47,8 @@ services:
     volumes:
       - ./ChaiJin:/workspace:ro
       - ./config/ChaiJin:/config:ro
+    extra_hosts:
+      - service.self.internal.hyku.com:127.17.0.1
   hyku.gateway:
 #    build: ./docker/nginx
 #    image: hyku.gateway
@@ -56,3 +64,11 @@ services:
       - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
     ports:
       - 80:80
+  assets.build:
+    build: ./assets
+    image: assets.build
+    volumes:
+      - ./assets/:/env/console/assets/
+      - ./assets/:/env/app/assets/
+    tty: true
+
