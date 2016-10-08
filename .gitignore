@@ -1,4 +1,7 @@
-*
+/*
 
-!.gitignore
-!README.md
+!/docker
+!/config/
+!/.gitignore
+!/README.md
+!/docker-compose.yml
