@@ -1,0 +1,96 @@
+# Port to listen on, optional, default value is 80. This 
+# configration item will be override by environment variable CONTENT_CONSOLE_PORT.
+port: 80
+debug: true
+
+# Secret key for cookie.
+cookie_secret: hyku
+
+redis:
+    host: redis
+    port: 6379
+
+notify:
+    host: redis
+    port: 6379
+
+content:
+  # 公告栏，用于公示内容
+  board:
+    # chaijin 为 liying 缓存活动信息的 redis key
+    event: "{region-env}_chaijin_liying_events"
+    expire: 2h
+    redis:
+      host: redis
+      port: 6379
+
+  #数据库配置，可配置多个
+  databases:
+    #id: 由程序规定，程序内会以此来获取数据库的句柄
+    #type: 数据库类型,sql或nosql
+    #engine: 具体的数据库引擎，目前支持"mongodb"
+    #host: 数据库主机的端口
+    #port: 数据库服务的端口
+    #username|password: 用户相关
+    - id: content_db
+      type: nosql
+      engine: mongodb
+#      host: mongo
+      host: db-main.dev-cn.internal.hyku.org
+      port: 27017
+      database: resource
+      #可选
+      #username:
+      #password:
+
+    -   id: release_db
+        type: nosql
+        engine: mongodb
+        host: db-main.dev-cn.internal.hyku.org
+#        host: mongo
+        port: 27017
+        database: release
+
+    -   id: user_db
+        type: sql
+        engine: mysql
+#        host: mysql
+#        user: root
+#        db: db_hyku
+        host: db-mysql.dev-cn.internal.hyku.org
+        user: hrmes
+        passwd: hrmes
+        db: dev_cn_db_console
+
+
+cache:
+    # Enable or disable the cache. Enable is default.
+    # enable: false
+    # Type of the cache,
+    type: redis
+    # host: localhost
+    # port: 6379
+
+duels_notify:
+  type: sqs
+  point_event_queue: "{region}-{env}_liying_events"
+  region_name: cn-north-1
+  aws_access_key_id:
+  aws_secret_access_key:
+
+log:
+    # log level, 默认为INFO, 可选值为DEBUG|INFO|WARNING|ERROR, 等级依次增加
+    level: DEBUG
+
+demo:
+    delay: 20
+    episodes:
+        - 57317b45421aa9072c5ae95c
+
+static_files:
+  CDN: http://cdn.id.hyku.org
+  RAW: https://dev-cn-hyku-static-files.s3.cn-north-1.amazonaws.com.cn
+
+news_id: 57317b45421aa9072c5ae95c
+
+

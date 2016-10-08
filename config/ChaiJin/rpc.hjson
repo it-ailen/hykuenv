@@ -1,0 +1,36 @@
+{
+    type: http
+    nodes: [
+        {
+            name: I_S0
+            url: "http://service.self.internal.hyku.com"
+        },
+        {
+            name: I_S1
+            url: "http://service.self.internal.hyku.com"
+            default: true  /* Set this one as default node to route, default value is false */
+        },
+        {
+            name: dev
+            url: "http://service1.dev-cn.internal.hyku.org"
+        }
+    ],
+    route: [
+        {
+            node: I_S0
+            prefix: [
+                "/admin",
+                "/content",
+                # "/filerack", DEBUG
+                "/sync",
+                "/ugcs"
+            ]
+        },
+        {
+            node: dev
+            prefix: [
+                "/filerack"
+            ]
+        }
+    ]
+}

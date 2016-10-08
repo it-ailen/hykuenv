@@ -1,0 +1,69 @@
+# Port to listen on, optional, default value is 80. This 
+# configration item will be override by environment variable CONTENT_CONSOLE_PORT.
+port: 80
+
+# Secret key for cookie.
+cookie_secret: hyku
+
+redis:
+    host: cache.self.internal.hyku.com
+    port: 6379
+
+cache:
+    # Enable or disable the cache. Enable is default.
+    enable: true
+    # 缓存时间，单位为秒
+    timeout: 3
+    # Type of the cache, 
+    type: redis
+    # host: localhost
+    # port: 6379
+
+rpc:
+  # RPC类型，目前只支持"http"
+  type: http
+  configs: # 具体配置
+    I_S0: http://service.self.internal.hyku.com
+    I_S1: http://service.self.internal.hyku.com
+
+log:
+    # log level, 默认为INFO, 可选值为DEBUG|INFO|WARNING|ERROR, 等级依次增加
+    level: DEBUG
+
+demo:
+    delay: 20
+    episodes:
+        - 57317b45421aa9072c5ae95c
+
+#数据库配置，可配置多个
+databases:
+    #id: 由程序规定，程序内会以此来获取数据库的句柄
+    #type: 数据库类型,sql或nosql
+    #engine: 具体的数据库引擎，目前支持"mongodb"
+    #host: 数据库主机的端口
+    #port: 数据库服务的端口
+    #username|password: 用户相关
+    -   id: content_db
+        type: nosql
+        engine: mongodb
+        host: mongo
+        port: 27017
+        database: resource
+        #可选
+        #username:
+        #password:
+        
+    -   id: release_db
+        type: nosql
+        engine: mongodb
+        host: mongo
+        port: 27017
+        database: release
+        
+    -   id: user_db
+        type: sql
+        engine: mysql
+        host: mysql
+        port: 3306
+        user: root
+        db: db_hyku

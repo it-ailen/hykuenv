@@ -1,0 +1,20 @@
+# Port to listen on, optional, default value is 80. This
+# configration item will be override by environment variable SYNC_CONSOLE_PORT.
+port: 80
+
+cookie_secret: TODO
+
+#static_files:
+#    CDN: http://cdn.cn.hyku.org
+#    RAW: https://s3-ap-southeast-1.amazonaws.com/dev-id-hyku-static-files
+
+log:
+    # log level, 默认为INFO, 可选值为DEBUG|INFO|WARNING|ERROR, 等级依次增加
+    level: DEBUG
+
+servers:
+    API: http://api.self.hyku.com/v1
+    CDN: http://cdn.id.hyku.org
+
+
+lang: en-us

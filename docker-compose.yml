@@ -1,0 +1,55 @@
+version: '2.0'
+services:
+  mongo:
+    image: mongo
+    volumes:
+      - ./data/mongo:/data
+#    ports:
+#      - 27017:27017
+  redis:
+    image: redis
+  chaijin.external.app:
+    build: ./docker/chaijin.external.app
+    image: chaijin.external.app
+    links:
+      - mongo
+      - redis
+    volumes:
+      - ./ChaiJin:/workspace:ro
+      - ./config/ChaiJin:/config:ro
+  chaijin.external.console:
+    build: ./docker/chaijin.external.console
+    image: chaijin.external.console
+    volumes:
+      - ./ChaiJin:/workspace:ro
+      - ./config/ChaiJin:/config:ro
+  chaijin.internal.admin:
+    build: ./docker/chaijin.internal.admin
+    image: chaijin.internal.admin
+    links:
+      - mongo
+      - redis
+    volumes:
+      - ./ChaiJin:/workspace:ro
+      - ./config/ChaiJin:/config:ro
+  chaijin.internal.content:
+    build: ./docker/chaijin.internal.content
+    image: chaijin.internal.content
+    links:
+      - mongo
+      - redis
+    volumes:
+      - ./ChaiJin:/workspace:ro
+      - ./config/ChaiJin:/config:ro
+  hyku.gateway:
+    build: ./docker/nginx
+    image: hyku.gateway
+    links:
+      - chaijin.external.app
+      - chaijin.external.console
+      - chaijin.internal.admin
+      - chaijin.internal.content
+    volumes:
+      - ./assets/:/assets:ro
+    ports:
+      - 80:80
