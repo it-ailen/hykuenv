@@ -6,7 +6,7 @@ port: 80
 cookie_secret: hyku
 
 redis:
-    host: cache.self.internal.hyku.com
+    host: redis
     port: 6379
 
 cache:
@@ -19,12 +19,12 @@ cache:
     # host: localhost
     # port: 6379
 
-rpc:
-  # RPC类型，目前只支持"http"
-  type: http
-  configs: # 具体配置
-    I_S0: http://service.self.internal.hyku.com
-    I_S1: http://service.self.internal.hyku.com
+#rpc:
+#  # RPC类型，目前只支持"http"
+#  type: http
+#  configs: # 具体配置
+#    I_S0: http://service.self.internal.hyku.com
+#    I_S1: http://service.self.internal.hyku.com
 
 log:
     # log level, 默认为INFO, 可选值为DEBUG|INFO|WARNING|ERROR, 等级依次增加
@@ -63,7 +63,8 @@ databases:
     -   id: user_db
         type: sql
         engine: mysql
-        host: mysql
+        host: db-mysql.dev-cn.internal.hyku.org
         port: 3306
-        user: root
-        db: db_hyku
+        user: hrmes
+        passwd: hrmes
+        db: dev_cn_db_console

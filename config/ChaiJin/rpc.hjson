@@ -2,34 +2,32 @@
     type: http
     nodes: [
         {
-            name: I_S0
-            url: "http://service.self.internal.hyku.com"
+            name: CJ_internal_admin
+            url: "http://chaijin.internal.admin"
         },
         {
-            name: I_S1
-            url: "http://service.self.internal.hyku.com"
-            default: true  /* Set this one as default node to route, default value is false */
+            name: CJ_internal_content
+            url: "http://chaijin.internal.content"
         },
         {
             name: dev
             url: "http://service1.dev-cn.internal.hyku.org"
+            default: true
         }
     ],
     route: [
         {
-            node: I_S0
+            node: CJ_internal_admin
             prefix: [
-                "/admin",
-                "/content",
-                # "/filerack", DEBUG
-                "/sync",
-                "/ugcs"
+                "/admin"
             ]
         },
         {
-            node: dev
+            node: CJ_internal_content
             prefix: [
-                "/filerack"
+                "/content",
+                "/sync",
+                "/ugcs"
             ]
         }
     ]
