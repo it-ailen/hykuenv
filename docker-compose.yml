@@ -46,6 +46,14 @@ services:
       - ./config/ChaiJin:/config:ro
 #    extra_hosts:
 #      - service.self.internal.hyku.com:127.17.0.1
+  xiaorang:
+    build: ./XiaoRang
+    image: xiaorang
+    links:
+      - redis
+    volumes:
+      - ./XiaoRang/src:/workspace/src:ro
+      - ./config/XiaoRang:/config:ro
   hyku.gateway:
 #    build: ./docker/nginx
 #    image: hyku.gateway

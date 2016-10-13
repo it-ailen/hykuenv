@@ -1,0 +1,23 @@
+CJ-board:
+  redis:
+    addr: redis:6379
+
+aws:
+  access_key_id: AKIAOUGBY5DR4JFFJDUA
+  access_key: CrDhlulNBeBhOpKZ9Taayn6Sxxz+qK8mUzri+f+T
+  region: cn-north-1
+
+channel:
+  push:
+    high-queue: cn-dev-sqs_high_priority_queue
+    low-queue: cn-dev-sqs_common_queue
+  point_event_queue: cn-dev-sqs_liying_events
+
+domains:
+  cdn: http://cdn.id.hyku.org
+  api: http://api.id.hyku.org/v1
+
+meta:
+  ticker-interval: 3
+  sent-mark-expire: 36000
+  pending-expire: 60
