@@ -11,6 +11,7 @@ services:
   chaijin.external.app:
     build: ./docker/chaijin.external.app
     image: chaijin.external.app
+    container_name: cj.app
     links:
       - chaijin.internal.admin
       - chaijin.internal.content
@@ -20,6 +21,7 @@ services:
   chaijin.external.console:
     build: ./docker/chaijin.external.console
     image: chaijin.external.console
+    container_name: cj.console
     links:
       - chaijin.internal.admin
       - chaijin.internal.content
@@ -29,6 +31,7 @@ services:
   chaijin.internal.admin:
     build: ./docker/chaijin.internal.admin
     image: chaijin.internal.admin
+    container_name: cj.admin
     links:
       - mongo
       - redis
@@ -38,6 +41,7 @@ services:
   chaijin.internal.content:
     build: ./docker/chaijin.internal.content
     image: chaijin.internal.content
+    container_name: cj.content
     links:
       - mongo
       - redis
@@ -49,6 +53,7 @@ services:
   xiaorang:
     build: ./XiaoRang
     image: xiaorang
+    container_name: xr
     links:
       - redis
     volumes:
@@ -58,6 +63,7 @@ services:
 #    build: ./docker/nginx
 #    image: hyku.gateway
     image: nginx
+    container_name: gateway
     links:
       - chaijin.external.app
       - chaijin.external.console
@@ -72,6 +78,7 @@ services:
   assets.build:
     build: ./assets
     image: assets.build
+    container_name: assets
     volumes:
       - ./assets/:/env/console/assets/
       - ./assets/:/env/app/assets/
