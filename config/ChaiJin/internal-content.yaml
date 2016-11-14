@@ -35,32 +35,23 @@ content:
     - id: content_db
       type: nosql
       engine: mongodb
-#      host: mongo
-      host: db-main.dev-cn.internal.hyku.org
+      host: mongo
       port: 27017
       database: resource
-      #可选
-      #username:
-      #password:
 
     -   id: release_db
         type: nosql
         engine: mongodb
-        host: db-main.dev-cn.internal.hyku.org
-#        host: mongo
+        host: mongo
         port: 27017
         database: release
 
     -   id: user_db
         type: sql
         engine: mysql
-#        host: mysql
-#        user: root
-#        db: db_hyku
-        host: db-mysql.dev-cn.internal.hyku.org
-        user: hrmes
-        passwd: hrmes
-        db: dev_cn_db_console
+        host: mysql
+        user: root
+        db: hyku_db
 
 
 cache:
@@ -89,7 +80,7 @@ demo:
 
 static_files:
   CDN: http://cdn.id.hyku.org
-  RAW: https://dev-cn-hyku-static-files.s3.cn-north-1.amazonaws.com.cn
+  RAW: http://cdn.id.hyku.org
 
 news_id: 57317b45421aa9072c5ae95c
 
