@@ -1,0 +1,10 @@
+version: "2.0"
+services:
+  chaijin:
+    build:
+      context: ./ChaiJin
+    volumes:
+      - ./config/ChaiJin:/config:ro
+    environment:
+      - RPC=/config/rpc.hjson
+      - LOG=debug

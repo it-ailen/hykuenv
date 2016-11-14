@@ -2,6 +2,11 @@ CJ-board:
   redis:
     addr: redis:6379
 
+aws:
+  access_key_id: AKIAOUGBY5DR4JFFJDUA
+  access_key: CrDhlulNBeBhOpKZ9Taayn6Sxxz+qK8mUzri+f+T
+  region: cn-north-1
+
 channel:
   push:
     high-queue: cn-dev-sqs_high_priority_queue

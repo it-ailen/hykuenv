@@ -10,8 +10,12 @@
             url: "http://chaijin.internal.content"
         },
         {
-            name: dev
-            url: "http://service1.dev-cn.internal.hyku.org"
+            name: dev_cn_is2
+            url: "http://is2.dev-cn.internal.hyku.org"
+        },
+        {
+            name: dev_cn_is1
+            url: "http://is1.dev-cn.internal.hyku.org"
             default: true
         }
     ],
@@ -28,6 +32,12 @@
                 "/content",
                 "/sync",
                 "/ugcs"
+            ]
+        },
+        {
+            node: dev_cn_is2
+            prefix: [
+                "/users/infos"
             ]
         }
     ]

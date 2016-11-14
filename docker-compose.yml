@@ -2,77 +2,62 @@ version: '2.0'
 services:
   mongo:
     image: mongo
+    container_name: hyku.mongo.local
     volumes:
-      - ./data/mongo:/data
-#    ports:
-#      - 27017:27017
+      - ./.data/mongo:/data
+  mysql:
+    image: mysql:5.7
+    container_name: hyku.mysql.local
+    volumes:
+      - ./ChaiJin/doc/mysql:/docker-entrypoint-initdb.d:ro
+#      - ./docs/dev/db:/docker-entrypoint-initdb.d:ro
+      - ./.data/mysql:/var/lib/mysql:rw
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+      - MYSQL_DATABASE=hyku_db
   redis:
     image: redis
-  chaijin.external.app:
-    build: ./docker/chaijin.external.app
-    image: chaijin.external.app
-    container_name: cj.app
-    links:
-      - chaijin.internal.admin
-      - chaijin.internal.content
-    volumes:
-      - ./ChaiJin:/workspace:ro
-      - ./config/ChaiJin:/config:ro
-  chaijin.external.console:
-    build: ./docker/chaijin.external.console
-    image: chaijin.external.console
-    container_name: cj.console
-    links:
-      - chaijin.internal.admin
-      - chaijin.internal.content
-    volumes:
-      - ./ChaiJin:/workspace:ro
-      - ./config/ChaiJin:/config:ro
+    container_name: hyku.redis.local
   chaijin.internal.admin:
-    build: ./docker/chaijin.internal.admin
-    image: chaijin.internal.admin
-    container_name: cj.admin
-    links:
-      - mongo
-      - redis
-    volumes:
-      - ./ChaiJin:/workspace:ro
-      - ./config/ChaiJin:/config:ro
-  chaijin.internal.content:
-    build: ./docker/chaijin.internal.content
-    image: chaijin.internal.content
-    container_name: cj.content
-    links:
-      - mongo
-      - redis
-    volumes:
-      - ./ChaiJin:/workspace:ro
-      - ./config/ChaiJin:/config:ro
-#    extra_hosts:
-#      - service.self.internal.hyku.com:127.17.0.1
-  xiaorang:
-    build: ./XiaoRang
-    image: xiaorang
-    container_name: xr
+    extends:
+      file: base.yml
+      service: chaijin
+    build:
+      dockerfile: internal-admin.Dockerfile
+    container_name: hyku.cj.admin
     links:
       - redis
-    volumes:
-      - ./XiaoRang/src:/workspace/src:ro
-      - ./config/XiaoRang:/config:ro
-  hyku.gateway:
-#    build: ./docker/nginx
-#    image: hyku.gateway
-    image: nginx
-    container_name: gateway
+      - mysql
+    environment:
+      - CONFIG=/config/internal-admin.yaml
+  chaijin.external.console:
+    extends:
+      file: base.yml
+      service: chaijin
+    build:
+      dockerfile: external-console.Dockerfile
+    container_name: hyku.cj.console
     links:
-      - chaijin.external.app
-      - chaijin.external.console
       - chaijin.internal.admin
-      - chaijin.internal.content
+    environment:
+      - CONFIG=/config/external-console.yaml
+#  xiaorang:
+#    build: ./XiaoRang
+#    image: xiaorang
+#    container_name: xr
+#    links:
+#      - redis
+#    volumes:
+#      - ./XiaoRang/src:/workspace/src:ro
+#      - ./config/XiaoRang:/config:ro
+  hyku.gateway.local:
+    image: nginx
+    container_name: hyku.gateway.local
+    links:
+      - chaijin.external.console
     volumes:
-      - ./assets/:/assets:ro
-      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./assets:/assets:ro
+      - ./docker/nginx:/etc/nginx/conf.d:ro
     ports:
       - 80:80
   assets.build:
@@ -82,5 +67,6 @@ services:
     volumes:
       - ./assets/:/env/console/assets/
       - ./assets/:/env/app/assets/
+      - ./docs/:/docs/
     tty: true
 

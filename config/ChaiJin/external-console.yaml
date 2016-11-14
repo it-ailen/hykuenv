@@ -8,15 +8,6 @@ cookie_secret: hyku
 log:
     # log level, 默认为INFO, 可选值为DEBUG|INFO|WARNING|ERROR, 等级依次增加
     level: DEBUG
-    # handler配置，可配置多个
-    #handlers:
-        #type: 类型,各类型支持不同的配置项.目前支持配置"file"
-
-        #standard 配置项
-        # standard默认为本地文件日志
-        # path: string, 必须
-        # rotate: bool(默认为true)
-        # rotateSize: string(默认为10M)
 
 static_files:
   CDN: http://cdn.cn.hyku.org
