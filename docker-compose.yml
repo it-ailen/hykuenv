@@ -28,6 +28,9 @@ services:
     links:
       - redis
       - mysql
+    depends_on:
+      - redis
+      - mysql
     environment:
       - CONFIG=/config/internal-admin.yaml
   chaijin.internal.content:
@@ -41,6 +44,10 @@ services:
       - redis
       - mysql
       - mongo
+    depends_on:
+      - redis
+      - mysql
+      - mongo
     environment:
       - CONFIG=/config/internal-content.yaml
   chaijin.external.console:
@@ -51,6 +58,9 @@ services:
       dockerfile: external-console.Dockerfile
     container_name: hyku.cj.console
     links:
+      - chaijin.internal.admin
+      - chaijin.internal.content
+    depends_on:
       - chaijin.internal.admin
       - chaijin.internal.content
     environment:
@@ -68,6 +78,8 @@ services:
     image: nginx
     container_name: hyku.gateway.local
     links:
+      - chaijin.external.console
+    depends_on:
       - chaijin.external.console
     volumes:
       - ./assets:/assets:ro

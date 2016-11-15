@@ -8,6 +8,7 @@
         {
             name: CJ_internal_content
             url: "http://chaijin.internal.content"
+            default: true
         },
         {
             name: dev_cn_is2
@@ -16,28 +17,26 @@
         {
             name: dev_cn_is1
             url: "http://is1.dev-cn.internal.hyku.org"
-            default: true
         }
     ],
     route: [
         {
             node: CJ_internal_admin
             prefix: [
-                "/admin"
-            ]
-        },
-        {
-            node: CJ_internal_content
-            prefix: [
-                "/content",
-                "/sync",
-                "/ugcs"
+                "/administrators"
             ]
         },
         {
             node: dev_cn_is2
             prefix: [
-                "/users/infos"
+                "/users/infos",
+                "/ugcs"
+            ]
+        },
+        {
+            node: dev_cn_is1
+            prefix: [
+                "/filerack"
             ]
         }
     ]
