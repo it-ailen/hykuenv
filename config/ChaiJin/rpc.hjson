@@ -29,14 +29,14 @@
         {
             node: dev_cn_is2
             prefix: [
-                "/users/infos",
-                "/ugcs"
+                "/internal/users/infos",
+                "/internal/ugcs"
             ]
         },
         {
             node: dev_cn_is1
             prefix: [
-                "/filerack"
+                "/internal/filerack"
             ]
         }
     ]
