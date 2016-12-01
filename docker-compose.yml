@@ -65,15 +65,13 @@ services:
       - chaijin.internal.content
     environment:
       - CONFIG=/config/external-console.yaml
-#  xiaorang:
-#    build: ./XiaoRang
-#    image: xiaorang
-#    container_name: xr
-#    links:
-#      - redis
-#    volumes:
-#      - ./XiaoRang/src:/workspace/src:ro
-#      - ./config/XiaoRang:/config:ro
+  hyku.xr:
+    build: ./gocode/src/XiaoRang
+    container_name: hyku.xr
+    links:
+      - redis
+    volumes:
+      - ./config/XiaoRang:/conf:ro
   hyku.gateway.local:
     image: nginx
     container_name: hyku.gateway.local

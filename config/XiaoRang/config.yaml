@@ -21,3 +21,6 @@ meta:
   ticker-interval: 3
   sent-mark-expire: 36000
   pending-expire: 60
+
+language: en-US
+queues/sqs/broker: cn-dev_broker
