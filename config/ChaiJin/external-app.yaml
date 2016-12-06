@@ -16,5 +16,8 @@ servers:
     API: http://api.self.hyku.com/v1
     CDN: http://cdn.id.hyku.org
 
+templates:
+  live: https://cdn-cn.hyku.org/assets/.../streaming.html?source={source}&id={id}
+  landscape_info_detail: https://cdn-cn.hyku.org/assets/.../detail.html?id={id}
 
 lang: en-us

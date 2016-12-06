@@ -85,4 +85,7 @@ static_files:
 
 news_id: 57317b45421aa9072c5ae95c
 
+assets:
+  opening_image: http://test.jpg
+  closing_image: http://test.jpg
 

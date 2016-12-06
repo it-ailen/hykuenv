@@ -3,8 +3,8 @@ CJ-board:
     addr: redis:6379
 
 aws:
-  access_key_id: AKIAOUGBY5DR4JFFJDUA
-  access_key: CrDhlulNBeBhOpKZ9Taayn6Sxxz+qK8mUzri+f+T
+  access_key_id: AKIAOMTADWQQUJFYTNVQ
+  access_key: wkt3GIFOoiy31rxPWppmRwcv42GteZgtFPzTNPSO
   region: cn-north-1
 
 channel:
@@ -22,5 +22,5 @@ meta:
   sent-mark-expire: 36000
   pending-expire: 60
 
-language: en-US
-queues/sqs/broker: cn-dev_broker
+language: zh-CN
+queues/sqs/broker: cn-dev-sqs_broker

@@ -65,10 +65,25 @@ services:
       - chaijin.internal.content
     environment:
       - CONFIG=/config/external-console.yaml
+  chaijin.external.app:
+    extends:
+      file: base.yml
+      service: chaijin
+    build:
+      dockerfile: external-app.Dockerfile
+    container_name: hyku.cj.app
+    links:
+      - chaijin.internal.content
+    depends_on:
+      - chaijin.internal.content
+    environment:
+      - CONFIG=/config/external-app.yaml
   hyku.xr:
     build: ./gocode/src/XiaoRang
     container_name: hyku.xr
     links:
+      - redis
+    depends_on:
       - redis
     volumes:
       - ./config/XiaoRang:/conf:ro
@@ -77,8 +92,10 @@ services:
     container_name: hyku.gateway.local
     links:
       - chaijin.external.console
+      - chaijin.external.app
     depends_on:
       - chaijin.external.console
+      - chaijin.external.app
     volumes:
       - ./assets:/assets:ro
       - ./docker/nginx:/etc/nginx/conf.d:ro
