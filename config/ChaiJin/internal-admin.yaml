@@ -21,6 +21,8 @@ databases:
         type: sql
         engine: mysql
         host: mysql
+#        host: db-mysql.dev-cn.internal.hyku.org
         port: 3306
         user: root
-        db: hyku_db
+        passwd: pabb
+        db: dev_cn_db_console

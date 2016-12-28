@@ -10,14 +10,16 @@ services:
     container_name: hyku.mysql.local
     volumes:
       - ./ChaiJin/doc/mysql:/docker-entrypoint-initdb.d:ro
-#      - ./docs/dev/db:/docker-entrypoint-initdb.d:ro
       - ./.data/mysql:/var/lib/mysql:rw
     environment:
-      - MYSQL_ALLOW_EMPTY_PASSWORD=1
-      - MYSQL_DATABASE=hyku_db
+#      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+      - MYSQL_ROOT_PASSWORD=pabb
+      - MYSQL_DATABASE=dev_cn_db_console
   redis:
     image: redis
     container_name: hyku.redis.local
+    ports:
+      - 6379:6379
   chaijin.internal.admin:
     extends:
       file: base.yml
@@ -78,15 +80,15 @@ services:
       - chaijin.internal.content
     environment:
       - CONFIG=/config/external-app.yaml
-  hyku.xr:
-    build: ./gocode/src/XiaoRang
-    container_name: hyku.xr
-    links:
-      - redis
-    depends_on:
-      - redis
-    volumes:
-      - ./config/XiaoRang:/conf:ro
+#  hyku.xr:
+#    build: ./gocode/src/XiaoRang
+#    container_name: hyku.xr
+#    links:
+#      - redis
+#    depends_on:
+#      - redis
+#    volumes:
+#      - ./config/XiaoRang:/conf:ro
   hyku.gateway.local:
     image: nginx
     container_name: hyku.gateway.local
