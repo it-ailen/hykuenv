@@ -17,6 +17,14 @@
         {
             name: dev_cn_is1
             url: "http://is1.dev-cn.internal.hyku.org"
+        },
+        {
+            name: XR
+            url: "http://hyku.xr"
+        },
+        {
+            name: CJ_internal_mall
+            url: "http://chaijin.internal.malls"
         }
     ],
     route: [
@@ -37,6 +45,18 @@
             node: dev_cn_is1
             prefix: [
                 "/internal/filerack"
+            ]
+        },
+        {
+            node: XR
+            prefix: [
+                "/internal/xr"
+            ]
+        },
+        {
+            node: CJ_internal_mall
+            prefix: [
+                "/internal/malls"
             ]
         }
     ]

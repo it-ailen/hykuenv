@@ -1,114 +1,148 @@
 version: '2.0'
 services:
-  mongo:
-    image: mongo
-    container_name: hyku.mongo.local
-    volumes:
-      - ./.data/mongo:/data
-  mysql:
-    image: mysql:5.7
-    container_name: hyku.mysql.local
-    volumes:
-      - ./ChaiJin/doc/mysql:/docker-entrypoint-initdb.d:ro
-      - ./.data/mysql:/var/lib/mysql:rw
-    environment:
-#      - MYSQL_ALLOW_EMPTY_PASSWORD=1
-      - MYSQL_ROOT_PASSWORD=pabb
-      - MYSQL_DATABASE=dev_cn_db_console
-  redis:
-    image: redis
-    container_name: hyku.redis.local
-    ports:
-      - 6379:6379
-  chaijin.internal.admin:
-    extends:
-      file: base.yml
-      service: chaijin
-    build:
-      dockerfile: internal-admin.Dockerfile
-    container_name: hyku.cj.admin
-    links:
-      - redis
-      - mysql
-    depends_on:
-      - redis
-      - mysql
-    environment:
-      - CONFIG=/config/internal-admin.yaml
-  chaijin.internal.content:
-    extends:
-      file: base.yml
-      service: chaijin
-    build:
-      dockerfile: internal-content.Dockerfile
-    container_name: hyku.cj.content
-    links:
-      - redis
-      - mysql
-      - mongo
-    depends_on:
-      - redis
-      - mysql
-      - mongo
-    environment:
-      - CONFIG=/config/internal-content.yaml
-  chaijin.external.console:
-    extends:
-      file: base.yml
-      service: chaijin
-    build:
-      dockerfile: external-console.Dockerfile
-    container_name: hyku.cj.console
-    links:
-      - chaijin.internal.admin
-      - chaijin.internal.content
-    depends_on:
-      - chaijin.internal.admin
-      - chaijin.internal.content
-    environment:
-      - CONFIG=/config/external-console.yaml
-  chaijin.external.app:
-    extends:
-      file: base.yml
-      service: chaijin
-    build:
-      dockerfile: external-app.Dockerfile
-    container_name: hyku.cj.app
-    links:
-      - chaijin.internal.content
-    depends_on:
-      - chaijin.internal.content
-    environment:
-      - CONFIG=/config/external-app.yaml
-#  hyku.xr:
-#    build: ./gocode/src/XiaoRang
-#    container_name: hyku.xr
-#    links:
-#      - redis
-#    depends_on:
-#      - redis
-#    volumes:
-#      - ./config/XiaoRang:/conf:ro
-  hyku.gateway.local:
-    image: nginx
-    container_name: hyku.gateway.local
-    links:
-      - chaijin.external.console
-      - chaijin.external.app
-    depends_on:
-      - chaijin.external.console
-      - chaijin.external.app
-    volumes:
-      - ./assets:/assets:ro
-      - ./docker/nginx:/etc/nginx/conf.d:ro
-    ports:
-      - 80:80
-  assets.build:
-    build: ./assets
-    image: assets.build
-    container_name: assets
-    volumes:
-      - ./assets/:/env/assets/
-      - ./docs/:/docs/
-    tty: true
+    mongo:
+        image: mongo
+        container_name: hyku.mongo.local
+        volumes:
+            - ./.data/mongo:/data
+    mysql:
+        image: mysql:5.7
+        container_name: hyku.mysql.local
+        volumes:
+            - ./ChaiJin/doc/mysql:/docker-entrypoint-initdb.d:ro
+            - ./.data/mysql:/var/lib/mysql:rw
+        environment:
+            #      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+            - MYSQL_ROOT_PASSWORD=pabb
+            - MYSQL_DATABASE=dev_cn_db_console
+    redis:
+        image: redis
+        container_name: hyku.redis.local
+        ports:
+            - 6379:6379
+    hyku.xr:
+        extends:
+            file: base.yml
+            service: common
+        build: ./gocode/src/XiaoRang
+        container_name: hyku.xr
+        links:
+            - redis
+        depends_on:
+            - redis
+        volumes:
+            - ./config:/conf:ro
+    chaijin.internal.admin:
+        extends:
+            file: base.yml
+            service: chaijin
+        build:
+            dockerfile: internal-admin.Dockerfile
+        container_name: hyku.cj.admin
+        links:
+            - redis
+            - mysql
+        depends_on:
+            - redis
+            - mysql
+        environment:
+            - CONFIG=/config/ChaiJin/internal-admin.yaml
+    chaijin.internal.content:
+        extends:
+            file: base.yml
+            service: chaijin
+        build:
+            dockerfile: internal-content.Dockerfile
+        container_name: hyku.cj.content
+        links:
+            - redis
+            - mysql
+            - mongo
+            - hyku.xr
+        depends_on:
+            - redis
+            - mysql
+            - mongo
+        environment:
+            - CONFIG=/config/ChaiJin/internal-content.yaml
+    chaijin.internal.malls:
+        extends:
+            file: base.yml
+            service: chaijin
+        build:
+            dockerfile: internal-mall.Dockerfile
+        container_name: hyku.cj.internal.malls
+        links:
+            - redis
+            - mysql
+        depends_on:
+            - redis
+            - mysql
+    chaijin.external.malls:
+        extends:
+            file: base.yml
+            service: chaijin
+        build:
+            dockerfile: external-mall.Dockerfile
+        container_name: hyku.cj.external.malls
+        links:
+            - redis
+            - mysql
+            - chaijin.internal.malls
+        depends_on:
+            - redis
+            - mysql
+    chaijin.external.console:
+        extends:
+            file: base.yml
+            service: chaijin
+        build:
+            dockerfile: external-console.Dockerfile
+        container_name: hyku.cj.console
+        links:
+            - chaijin.internal.admin
+            - chaijin.internal.content
+            - chaijin.internal.malls
+        depends_on:
+            - chaijin.internal.admin
+            - chaijin.internal.content
+        environment:
+            - CONFIG=/config/ChaiJin/external-console.yaml
+    chaijin.external.app:
+        extends:
+            file: base.yml
+            service: chaijin
+        build:
+            dockerfile: external-app.Dockerfile
+        container_name: hyku.cj.app
+        links:
+            - chaijin.internal.content
+        depends_on:
+            - chaijin.internal.content
+        environment:
+            - CONFIG=/config/ChaiJin/external-app.yaml
+    hyku.gateway.local:
+        image: nginx
+        container_name: hyku.gateway.local
+        links:
+            - chaijin.external.console
+            - chaijin.external.app
+            - chaijin.external.malls
+        depends_on:
+            - chaijin.external.console
+            - chaijin.external.app
+            - chaijin.external.malls
+        volumes:
+            - ./assets:/assets:ro
+            - ./docker/nginx:/etc/nginx/conf.d:ro
+        ports:
+            - 80:80
+    assets.build:
+        build: ./assets
+        image: assets.build
+        container_name: assets
+        volumes:
+            - ./assets/:/env/assets/
+            - ./docs/:/docs/
+        tty: true
 

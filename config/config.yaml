@@ -1,0 +1,65 @@
+common/session_life: 1d
+common/debug: false
+common/cookie_secret: hyku
+common/language: en_US
+common/timezone: "+08:00"
+
+common/redis/host: redis
+common/redis/port: 6379
+
+common/db/mongo/host: mongo
+common/db/mongo/port: 27017
+#common/db/mongo/user: hrmes
+#common/db/mongo/password: hrmes
+
+common/db/mysql/host: mysql
+common/db/mysql/port: 3306
+common/db/mysql/db: dev_cn_db_console
+common/db/mysql/user: root
+common/db/mysql/passwd: pabb
+
+common/aws/access_secret:
+common/aws/access_key:
+common/aws/token:
+common/aws/region:
+
+# rpc
+rpc/node/is1/scheme: http
+rpc/node/is1/uri: is1.dev-cn.internal.hyku.org
+rpc/node/is2/scheme: http
+rpc/node/is2/uri: is2.dev-cn.internal.hyku.org
+rpc/node/is2/default: true
+rpc/router/is1/prefix: [/internal/users/auth, /admin, /content, /internal/filerack, /sync]
+
+#common/templates:
+chaijin/common/templates/info_detail: https://cdn-cn.hyku.org/assets/content/infos/info-detail.html?info_id={id}&host=https://api-cn.hyku.org/v1&current=detail
+chaijin/common/templates/info_share: https://cdn-cn.hyku.org/assets/content/infos/info-detail.html?info_id={id}&host=https://api-cn.hyku.org/v1&current=share
+chaijin/common/templates/live: https://cdn-cn.hyku.org/assets/content/live-stream.html?source={source}&id={id}
+chaijin/common/templates/landscape_info_detail: https://cdn-cn.hyku.org/assets/content/infos/info-detail.html?info_id={id}&host=https://api-cn.hyku.org/v1&current=detail
+chaijin/common/templates/spu_detail: https://cdn-cn.hyku.org/assets/content/infos/info-detail.html?info_id={id}&host=https://api-cn.hyku.org/v1&current=detail
+chaijin/common/templates/spu_share: https://cdn-cn.hyku.org/assets/mall/item.html#!/?api_host=https:%2F%2Fapi-cn.hyku.org%2Fv1&id={id}&current=share
+chaijin/common/templates/static_resource: https://cdn-cn.hyku.org{path}
+chaijin/common/templates/episode/opening_image: https://cdn-cn.hyku.org/assets/content/images/episodes/opening.cn.jpg
+chaijin/common/templates/episode/closing_image: https://cdn-cn.hyku.org/assets/content/images/episodes/closing.cn.jpg
+
+
+# external app
+chaijin/external/app/port: 80
+
+# internal content
+chaijin/internal/content/port: 80
+chaijin/internal/content/episode/forecast_period: 5m
+chaijin/internal/content/task_id/ttl: 10d
+
+# external mall
+chaijin/external/mall/port: 80
+
+# internal mall
+chaijin/internal/mall/port: 80
+
+xiaorang/http_port: 80
+xiaorang/ticker/interval: 3s
+xiaorang/sqs/queue/info_high: cn-dev-sqs_high_priority_queue
+xiaorang/sqs/queue/info_low: cn-dev-sqs_common_queue
+xiaorang/sqs/queue/points: cn-dev-sqs_liying_events
+xiaorang/sqs/queue/episode_forecast: cn-dev-sqs_broker
